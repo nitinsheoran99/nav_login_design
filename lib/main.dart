@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nav_login_design/login_page.dart';
+import 'package:nav_login_design/sign_up.dart';
+import 'package:validators/validators.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Center(
-              child: Padding(padding:  EdgeInsets.all(16.0),
+              child: Padding(padding:  EdgeInsets.all(2.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -49,6 +51,9 @@ class _HomePageState extends State<HomePage> {
                       validator: (name1){
                         if(name1==null || name1.isEmpty){
                           return 'Please input name';
+                        }
+                        if(name1!="Abc"){
+                      return "please input specific name";
                         }
                         return null;
                       },
@@ -61,6 +66,12 @@ class _HomePageState extends State<HomePage> {
                         if(password1==null || password1.isEmpty){
                           return 'Please input password';
                         }
+                        if(password1.length!=5){
+                          return 'password must be 5 digit';
+                        }
+                        if(password1!='12345'){
+                          return 'Please input specific numbertype';
+                        }
                       },
                     ),
                     SizedBox(height:32),
@@ -69,17 +80,21 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Container(
                             width: MediaQuery.of(context).size.width/2.5,
-                            child: ElevatedButton(onPressed: (){
-                              String name="Abc";
-                              int password=12345;
-                              Navigator.push(context, MaterialPageRoute(builder:
-                                  (context)=>LoginPage(),));
-                            },
+                            child: ElevatedButton(onPressed: () {
+                            // await Login();
+                             if(formkey.currentState!.validate()){
+                             Navigator.push(context, MaterialPageRoute(builder:
+                                (context)=>LoginPage(),));
+                            }},
                               child: Text('Login'),)),
-                        SizedBox(width:32,),
+
+                         SizedBox(width:32,),
                         Container(
                             width: MediaQuery.of(context).size.width/2.5,
-                            child: ElevatedButton(onPressed: (){},
+                            child: ElevatedButton(onPressed: (){
+                             Navigator.push(context, MaterialPageRoute(
+                                 builder: (context)=>SignupPage()));
+                            },
                                 child: Text('Signup'))),
                       ],
                     )
